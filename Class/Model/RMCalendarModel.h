@@ -51,6 +51,7 @@ typedef NS_ENUM(NSInteger, CellDayType) {
 @property (nonatomic, assign) BOOL isEnable;
 
 @property (nonatomic, strong) NSString *Chinese_calendar;//农历
+@property (nonatomic, assign) BOOL isChineseCalendar;
 @property (nonatomic, strong) NSString *holiday;//节日
 
 

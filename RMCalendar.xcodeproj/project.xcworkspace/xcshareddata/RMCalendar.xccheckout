@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>59313485-6EF1-4326-A419-3C7AEEBFBD5F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RMCalendar</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AC1A553D4D6C0F6FE06F6E60C8CA2E5F97003E1F</key>
+		<string>https://github.com/chihaodong/RMCalendar.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>RMCalendar.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AC1A553D4D6C0F6FE06F6E60C8CA2E5F97003E1F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/chihaodong/RMCalendar.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AC1A553D4D6C0F6FE06F6E60C8CA2E5F97003E1F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AC1A553D4D6C0F6FE06F6E60C8CA2E5F97003E1F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RMCalendar</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -35,6 +35,8 @@
 
 @property (nonatomic, assign) BOOL isEnable;
 
+@property (nonatomic, assign) BOOL isDisplayChineseCalender;
+
 @end
 
 @implementation RMCalendarLogic
@@ -45,6 +47,11 @@
         _priceModelArr = [NSArray array];
     }
     return _priceModelArr;
+}
+
+-(NSMutableArray *)reloadCalendarView:(NSDate *)date selectDate:(NSDate *)selectDate needDays:(int)days showType:(CalendarShowType)type isEnable:(BOOL)isEnable priceModelArr:(NSArray *)arr isChineseCalendar:(BOOL)isChineseCalendar {
+    self.isDisplayChineseCalender = isChineseCalendar;
+    return [self reloadCalendarView:date selectDate:selectDate needDays:days showType:type isEnable:isEnable priceModelArr:arr];
 }
 
 -(NSMutableArray *)reloadCalendarView:(NSDate *)date selectDate:(NSDate *)selectDate needDays:(int)days showType:(CalendarShowType)type isEnable:(BOOL)isEnable priceModelArr:(NSArray *)arr {
@@ -128,6 +135,7 @@
         
         RMCalendarModel *calendarDay = [RMCalendarModel calendarWithYear:components.year month:components.month day:i];
         calendarDay.style = CellDayTypeEmpty;//不显示
+        calendarDay.isChineseCalendar = self.isDisplayChineseCalender;   //此处需要赋值 农历是否展现 否则点击时产生错位
         [array addObject:calendarDay];
     }
     
@@ -150,6 +158,7 @@
     for (int i = 1; i < partialDaysCount + 1; ++i) {
         RMCalendarModel *calendarDay = [RMCalendarModel calendarWithYear:components.year month:components.month day:i];
         calendarDay.style = CellDayTypeEmpty;
+        calendarDay.isChineseCalendar = self.isDisplayChineseCalender;  //此处需要赋值 农历是否展现 否则点击时产生错位
         [array addObject:calendarDay];
     }
 }
@@ -165,11 +174,12 @@
     
     for (int i = 1; i < daysCount + 1; ++i) {
         RMCalendarModel *calendarDay = [RMCalendarModel calendarWithYear:components.year month:components.month day:i];
-        
-        //        calendarDay.Chinese_calendar = [self LunarForSolarYear:components.year Month:components.month Day:i];
-        
         calendarDay.week = [[calendarDay date]getWeekIntValueWithDate];
-        [self LunarForSolarYear:calendarDay];
+        calendarDay.isChineseCalendar = self.isDisplayChineseCalender;  //此处需要赋值 农历是否展现 否则点击时产生错位
+        if (self.isDisplayChineseCalender) {
+            calendarDay.Chinese_calendar = [self LunarForSolarYear:components.year Month:components.month Day:i];
+            [self LunarForSolarYear:calendarDay];
+        }
         [self changStyle:calendarDay];
         [array addObject:calendarDay];
     }
@@ -315,68 +325,67 @@
 
 -(void)LunarForSolarYear:(RMCalendarModel *)calendarDay{
     
-    
     NSString *solarYear = [self LunarForSolarYear:calendarDay.year Month:calendarDay.month Day:calendarDay.day];
     
     NSArray *solarYear_arr= [solarYear componentsSeparatedByString:@"-"];
     
-    if([solarYear_arr[0]isEqualToString:@"正"] &&
+    if([solarYear_arr[0]isEqualToString:@"正月"] &&
        [solarYear_arr[1]isEqualToString:@"初一"]){
         
         //正月初一：春节
         calendarDay.holiday = @"春节";
         
-    }else if([solarYear_arr[0]isEqualToString:@"正"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"正月"] &&
              [solarYear_arr[1]isEqualToString:@"十五"]){
         
         
         //正月十五：元宵节
         calendarDay.holiday = @"元宵节";
         
-    }else if([solarYear_arr[0]isEqualToString:@"二"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"二月"] &&
              [solarYear_arr[1]isEqualToString:@"初二"]){
         
         //二月初二：春龙节(龙抬头)
         calendarDay.holiday = @"龙抬头";
         
-    }else if([solarYear_arr[0]isEqualToString:@"五"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"五月"] &&
              [solarYear_arr[1]isEqualToString:@"初五"]){
         
         //五月初五：端午节
         calendarDay.holiday = @"端午节";
         
-    }else if([solarYear_arr[0]isEqualToString:@"七"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"七月"] &&
              [solarYear_arr[1]isEqualToString:@"初七"]){
         
         //七月初七：七夕情人节
         calendarDay.holiday = @"七夕节";
         
-    }else if([solarYear_arr[0]isEqualToString:@"八"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"八月"] &&
              [solarYear_arr[1]isEqualToString:@"十五"]){
         
         //八月十五：中秋节
         calendarDay.holiday = @"中秋节";
         
-    }else if([solarYear_arr[0]isEqualToString:@"九"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"九月"] &&
              [solarYear_arr[1]isEqualToString:@"初九"]){
         
         //九月初九：重阳节、中国老年节（义务助老活动日）
         calendarDay.holiday = @"重阳节";
         
-    }else if([solarYear_arr[0]isEqualToString:@"腊"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"腊月"] &&
              [solarYear_arr[1]isEqualToString:@"初八"]){
         
         //腊月初八：腊八节
         calendarDay.holiday = @"腊八节";
         
-    }else if([solarYear_arr[0]isEqualToString:@"腊"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"腊月"] &&
              [solarYear_arr[1]isEqualToString:@"二十四"]){
         
         
         //腊月二十四 小年
         calendarDay.holiday = @"小年";
         
-    }else if([solarYear_arr[0]isEqualToString:@"腊"] &&
+    }else if([solarYear_arr[0]isEqualToString:@"腊月"] &&
              [solarYear_arr[1]isEqualToString:@"三十"]){
         
         //腊月三十（小月二十九）：除夕
@@ -384,8 +393,12 @@
         
     }
     
-    
-    calendarDay.Chinese_calendar = solarYear_arr[1];
+    if ([solarYear_arr[1] isEqualToString:@"初一"])
+    {
+        calendarDay.Chinese_calendar = solarYear_arr[0];
+    } else {
+        calendarDay.Chinese_calendar = solarYear_arr[1];
+    }
     
     
     
@@ -401,7 +414,7 @@
                           @"廿一",@"廿二",@"廿三",@"廿四",@"廿五",@"廿六",@"廿七",@"廿八",@"廿九",@"三十",nil];
     
     //农历月份名
-    NSArray *cMonName =  [NSArray arrayWithObjects:@"*",@"正",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十",@"十一",@"腊",nil];
+    NSArray *cMonName =  [NSArray arrayWithObjects:@"*",@"正月",@"二月",@"三月",@"四月",@"五月",@"六月",@"七月",@"八月",@"九月",@"十月",@"十一月",@"腊月",nil];
     
     //公历每月前面的天数
     const int wMonthAdd[12] = {0,31,59,90,120,151,181,212,243,273,304,334};

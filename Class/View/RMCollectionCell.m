@@ -55,19 +55,19 @@
     self.selectImageView = selectImageView;
     [self addSubview:selectImageView];
     
-    UILabel *dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * 0.5)];
-    dayLabel.font = kFont(12);
-    dayLabel.textAlignment = NSTextAlignmentCenter;
+    UILabel *dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.bounds.size.width * 0.5, self.bounds.size.width * 0.5)];
+    dayLabel.font = kFont(14);
     self.dayLabel = dayLabel;
     [self addSubview:dayLabel];
     
-    UILabel *chineseCalendar = [[UILabel alloc] init];
-    chineseCalendar.font = kFont(12);
+    UILabel *chineseCalendar = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width * 0.5, 0, dayLabel.width, dayLabel.height)];
+    chineseCalendar.font = kFont(9);
+    chineseCalendar.textAlignment = NSTextAlignmentCenter;
     self.chineseCalendar = chineseCalendar;
     [self addSubview:chineseCalendar];
     
 #warning 价格Label 可根据需求修改
-    UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(0, dayLabel.height, dayLabel.width, dayLabel.height)];
+    UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(0, dayLabel.height, self.bounds.size.width, dayLabel.height)];
     price.font = kFont(9);
     price.textAlignment = NSTextAlignmentCenter;
     self.price = price;
@@ -86,52 +86,68 @@
         self.price.textColor = [UIColor orangeColor];
         self.price.text = [NSString stringWithFormat:@"￥%.1f",model.ticketModel.ticketPrice];
     }
-
+    self.chineseCalendar.text = model.Chinese_calendar;
+    self.chineseCalendar.hidden = NO;
+    /**
+     *  如果不展示农历，则日期居中
+     */
+    if (!model.isChineseCalendar) {
+        self.dayLabel.x = 0;
+        self.dayLabel.width = self.bounds.size.width;
+        self.dayLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    
     switch (model.style) {
         case CellDayTypeEmpty:
             self.selectImageView.hidden = YES;
             self.dayLabel.hidden = YES;
             self.backgroundColor = [UIColor whiteColor];
+            self.chineseCalendar.hidden = YES;
             break;
         case CellDayTypePast:
             self.dayLabel.hidden = NO;
             self.selectImageView.hidden = YES;
             if (model.holiday) {
                 self.dayLabel.text = model.holiday;
+                self.dayLabel.width = self.bounds.size.width;
+                self.chineseCalendar.hidden = YES;
             } else {
                 self.dayLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)model.day];
             }
+            self.chineseCalendar.textColor = [UIColor lightGrayColor];
             self.dayLabel.textColor = [UIColor lightGrayColor];
             self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CalendarDisableDate"]];
             break;
+            
+        case CellDayTypeWeek:
+            // 以下内容暂时无用  将来可以设置 周六 日 特殊颜色时 可用
+//            self.dayLabel.hidden = NO;
+//            self.selectImageView.hidden = YES;
+//            if (model.holiday) {
+//                self.dayLabel.text = model.holiday;
+//                self.dayLabel.textColor = COLOR_HIGHLIGHT;
+//            } else {
+//                self.dayLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)model.day];
+//                self.dayLabel.textColor = COLOR_NOAML;
+//            }
+//            self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CalendarNormalDate"]];
+//            self.chineseCalendar.textColor = [UIColor blackColor];
+//            break;
             
         case CellDayTypeFutur:
             self.dayLabel.hidden = NO;
             self.selectImageView.hidden = YES;
             if (model.holiday) {
                 self.dayLabel.text = model.holiday;
+                self.dayLabel.width = self.bounds.size.width;
+                self.chineseCalendar.hidden = YES;
                 self.dayLabel.textColor = COLOR_HIGHLIGHT;
             } else {
                 self.dayLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)model.day];
                 self.dayLabel.textColor = COLOR_NOAML;
             }
-            //            day_title.text = model.Chinese_calendar;
-            
+            self.chineseCalendar.textColor = [UIColor blackColor];
             self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CalendarNormalDate"]];
-            break;
-            
-        case CellDayTypeWeek:
-            self.dayLabel.hidden = NO;
-            self.selectImageView.hidden = YES;
-            if (model.holiday) {
-                self.dayLabel.text = model.holiday;
-                self.dayLabel.textColor = COLOR_HIGHLIGHT;
-            } else {
-                self.dayLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)model.day];
-                self.dayLabel.textColor = COLOR_NOAML;
-            }
-            self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CalendarNormalDate"]];
-            //            day_title.text = model.Chinese_calendar;
             break;
             
         case CellDayTypeClick:
@@ -141,7 +157,7 @@
             self.dayLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)model.day];
             self.dayLabel.textColor = [UIColor whiteColor];
             self.price.textColor = [UIColor whiteColor];
-            //            day_title.text = model.Chinese_calendar;
+            self.chineseCalendar.textColor = [UIColor whiteColor];
             break;
             
         default:

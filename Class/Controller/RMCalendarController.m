@@ -75,10 +75,6 @@ static NSString *DayCell = @"DayCell";
 #endif
 }
 
--(void)setIsEnable:(BOOL)isEnable {
-    _isEnable = isEnable;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // 定义Layout对象
@@ -127,7 +123,7 @@ static NSString *DayCell = @"DayCell";
     
     NSDate *selectdate  = [NSDate date];
     //返回数据模型数组
-    return [self.calendarLogic reloadCalendarView:date selectDate:selectdate needDays:days showType:type isEnable:isEnable priceModelArr:arr];
+    return [self.calendarLogic reloadCalendarView:date selectDate:selectdate needDays:days showType:type isEnable:isEnable priceModelArr:arr isChineseCalendar:self.isDisplayChineseCalendar];
 }
 
 #pragma mark - CollectionView 数据源

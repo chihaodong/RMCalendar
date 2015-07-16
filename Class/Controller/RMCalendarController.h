@@ -53,6 +53,10 @@ typedef void (^CalendarBlock)(RMCalendarModel *model);
  *  无价格的日期是否可点击  默认为NO
  */
 @property(nonatomic, assign) BOOL isEnable;
+/**
+ *  是否展示农历  默认为NO
+ */
+@property(nonatomic, assign) BOOL isDisplayChineseCalendar;
 
 /**
  *  初始化对象
