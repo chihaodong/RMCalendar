@@ -1,11 +1,17 @@
 # RMCalendar 单价日历
 
 实现功能：
+
+2015年7月16日更新
+
+添加农历功能，对细节优化修复
+
 主要是在日历上显示 当日对应的单价，类似携程、同城、去哪等旅游APP的日历，可以展现当日的票价等功能。
 
 ![image](https://github.com/chihaodong/RMCalendar/blob/master/Preview/preview-2@2x.jpg)    
 ![image](https://github.com/chihaodong/RMCalendar/blob/master/Preview/preview-3@2x.jpg)    
 ![image](https://github.com/chihaodong/RMCalendar/blob/master/Preview/preview-4@2x.jpg) 
+![image](https://github.com/chihaodong/RMCalendar/blob/master/Preview/preview-5@2x.jpg)
 
 # 使用方法    
 
@@ -15,11 +21,12 @@
 创建对象   (有多种方法，具体看代码）
 ```
 RMCalendarController *c = [RMCalendarController calendarWithDays:365 showType:CalendarShowTypeMultiple];
+c.isDisplayChineseCalendar = YES; // 增加农历展现功能 默认不展现
 c.isEnable = YES;   // 设置是否显示 无价格时可点击
 c.modelArr = "TicketModel模型数组";  //具体属性需看 TicketModel.h 文件 传入格式请按照 下面例子 
 // 返回结果回调
 c.calendarBlock = ^(RMCalendarModel *model) {
-        if (model.ticketModel) {
+        if (model.ticketModel.ticketCount) {
             NSLog(@"%lu-%lu-%lu-票价%.1f",(unsigned long)model.year,(unsigned long)model.month,(unsigned long)model.day, model.ticketModel.ticketPrice);
         } else {
             NSLog(@"%lu-%lu-%lu",(unsigned long)model.year,(unsigned long)model.month,(unsigned long)model.day);
@@ -60,4 +67,4 @@ View        视图
 2、日历部分源码属于原作者：我爱吃番茄   
 3、二次开发版权归于本人
 #网站  
-软曼网：http://www.ruanman.net/   提供Windows 10系统下载，iOS 开发技术分享，欢迎大家支持
+软曼网：http://www.ruanman.net/   提供Windows 10系统下载，iOS 开发技术分享，欢迎大家支持 QQ技术交流群：33415610
