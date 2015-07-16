@@ -76,7 +76,6 @@
 
 - (void)setModel:(RMCalendarModel *)model {
     _model = model;
-    
     //没有剩余票数
     if (!model.ticketModel.ticketCount || model.style == CellDayTypePast) {
         self.price.hidden = YES;

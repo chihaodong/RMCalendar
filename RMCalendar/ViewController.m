@@ -46,6 +46,7 @@
                                                                 @"ticketCount":@0, @"ticketPrice":@153}]]; //最后一条数据ticketCount 为0时不显示
     // 是否展现农历
     c.isDisplayChineseCalendar = YES;
+    
     // YES 没有价格的日期可点击
     // NO  没有价格的日期不可点击
     c.isEnable = YES;

@@ -60,5 +60,4 @@
 //    BOOL isEqual = (self.year == day.year) && (self.month == day.month) && (self.day == day.day);
 //    return isEqual;
 //}
-
 @end
