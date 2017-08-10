@@ -403,7 +403,7 @@
     
 }
 
--(NSString *)LunarForSolarYear:(NSUInteger)wCurYear Month:(NSUInteger)wCurMonth Day:(NSUInteger)wCurDay{
+-(NSString *)LunarForSolarYear:(NSUInteger)wCurYear Month:(NSInteger)wCurMonth Day:(NSUInteger)wCurDay{
     
     
     
